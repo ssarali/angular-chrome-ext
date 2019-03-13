@@ -4,12 +4,12 @@
   "version": "1.0.0",
   "permissions": [ "tabs", "activeTab" ],
   "background": {
-    "page": "index.html#/event-page",
+    "page": "index.html",
     "persistent": false
   },
   "browser_action": {
     "default_title": "Open Popup!",
-    "default_popup": "index.html#/popup"
+    "default_popup": "index.html"
   },
   "icons": {
     "16": "images/get_started16.png",
