@@ -39,8 +39,16 @@ export class AppComponent implements OnInit, OnChanges {
           tabIndex: tab.index
         });
       });
+
+      console.log('Number of tabs: ' + this.tabList.length);
+
     });
   };
+
+  
+  onClickRefresh() {
+    console.log('This triggers a lifecycle to load the tabs in tabList and is related to zone. This is similar to $apply/$digest in angularJs.');
+  }
 }
 
 

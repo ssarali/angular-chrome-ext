@@ -7,18 +7,19 @@
   </h1>
 </div>
 
-<div class="container">
-  <div class="row">
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let tab of tabList">
-        <p>{{ tab.title }}</p>
-      </li>
-    </ul>
+<div class="container">  
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let tab of tabList">
+      {{tab.title}}
+    </li>
+  </ul>
+
+  <div style="text-align: center;">
+    <button class="btn btn-info" (click)="onClickRefresh()">Refresh</button>
   </div>
 </div>
+
   
-
-
 <router-outlet></router-outlet>
 
 
