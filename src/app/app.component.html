@@ -1,24 +1,27 @@
 <!--The content below is only a placeholder and can be replaced.-->
-  
-<div style="text-align:center; width: 500px">
-  <img width="100" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-  <h1>
+
+<div style="text-align:center; width: 400px" class="mt-3">
+  <h5>
+    <img width="40" height="40" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
     {{ title }}
-  </h1>
+  </h5>
 </div>
 
 <div class="container">  
-  <ul class="list-group">
-    <li class="list-group-item" *ngFor="let tab of tabList">
-      {{tab.title}}
+  <ul class="list-group mb-3">
+    <li class="list-group-item p-2" *ngFor="let tab of tabList">
+      <img [src]="tab.favIconUrl" height="25" width="25"/>
+      <span class="small ml-3 d-inline-block text-truncate" style="width: 230px" title="{{tab.title}}">{{tab.title}}</span>
+      <span class="pull-right mr-2"><a (click)="openTab(tab.tabIndex)"><i style="color:grey" class="fa fa-external-link" aria-hidden="true" title="Open Tab"></i></a></span>
     </li>
   </ul>
 
-  <div style="text-align: center;">
-    <button class="btn btn-info" (click)="onClickRefresh()">Refresh</button>
+  <div class=" mb-3" style="text-align: center;">
+    <button type="button" class="btn btn-info btn-sm mr-2" (click)="onClickRefresh()">Refresh</button>
+    <button type="button" class="btn btn-info btn-sm inline mr-2" disabled>Save to Firebase</button>
+    <button type="button" class="btn btn-info btn-sm inline mr-2" disabled>Get Firebase Projects</button>
   </div>
 </div>
-
   
 <router-outlet></router-outlet>
 
