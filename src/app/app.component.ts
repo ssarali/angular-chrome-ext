@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges, NgZone } from '@angular/core';
 import { TabModel } from './TabModel';
+import { FirebaseService } from './services/firebase.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ export class AppComponent implements OnInit, OnChanges {
   public tabList: TabModel[];
 
   constructor(
-    private zone: NgZone
+    private zone: NgZone,
+    public firebaseService: FirebaseService,
   ) { }
 
   ngOnInit(): void {
@@ -49,8 +51,14 @@ export class AppComponent implements OnInit, OnChanges {
     chrome.tabs.highlight({ 'tabs': tabIndex }, function () { });
   }
   
-  onClickRefresh() {
+  onClickRefresh(): void {
     console.log('This triggers a lifecycle to load the tabs in tabList and is related to zone. This is similar to $apply/$digest in angularJs.');
+  }
+
+  saveTab(tab): void {
+    this.firebaseService.saveTab(tab).then(() => {
+      console.log('Saved: ' + tab.title);
+    });
   }
 }
 

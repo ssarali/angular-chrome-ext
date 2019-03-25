@@ -8,18 +8,18 @@
 </div>
 
 <div class="container">  
-  <ul class="list-group mb-3">
+  <ul class="list-group mb-3" height="500">
     <li class="list-group-item p-2" *ngFor="let tab of tabList">
-      <img [src]="tab.favIconUrl" height="25" width="25"/>
+      <a (click)="openTab(tab.tabIndex)">
+        <img [src]="tab.favIconUrl" height="23" width="23"/>
       <span class="small ml-3 d-inline-block text-truncate" style="width: 230px" title="{{tab.title}}">{{tab.title}}</span>
-      <span class="pull-right mr-2"><a (click)="openTab(tab.tabIndex)"><i style="color:grey" class="fa fa-external-link" aria-hidden="true" title="Open Tab"></i></a></span>
+      </a>      
+      <span class="pull-right mr-2"><a (click)="saveTab(tab)"><i style="color:grey" class="fa-floppy-o" aria-hidden="true" title="Open Tab"></i></a></span>
     </li>
   </ul>
 
   <div class=" mb-3" style="text-align: center;">
     <button type="button" class="btn btn-info btn-sm mr-2" (click)="onClickRefresh()">Refresh</button>
-    <button type="button" class="btn btn-info btn-sm inline mr-2" disabled>Save to Firebase</button>
-    <button type="button" class="btn btn-info btn-sm inline mr-2" disabled>Get Firebase Projects</button>
   </div>
 </div>
   
