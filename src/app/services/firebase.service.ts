@@ -23,4 +23,26 @@ export class FirebaseService {
       tabIndex: tab.tabIndex,
     });
   }
+
+  deleteTab(tab: TabModel) {
+    return this.db.collection('test').doc(tab.id).delete();
+  }
+
+  getTabs() {
+    return this.db.collection('test').snapshotChanges();
+  }
+
+  createCollection(collectionName: string) {
+    return this.db.collection(collectionName).add({
+    });
+  }
+
+  // need GCP SDK to extend fnuctionality and use getCollections
+  //getListCollections() {
+  //  return this.db.getCollections().then(collections => {
+  //    for (let collection of collections) {
+  //      console.log(`Found collection with id: ${collection.id}`);
+  //    }
+  //  })
+  // }
 }

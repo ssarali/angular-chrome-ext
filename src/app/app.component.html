@@ -7,20 +7,39 @@
   </h5>
 </div>
 
-<div class="container">  
+<div class="container">
+  <h6>Current Tabs</h6>
   <ul class="list-group mb-3" height="500">
     <li class="list-group-item p-2" *ngFor="let tab of tabList">
+      <a (click)="openTab(tab.tabIndex)">
+        <img [src]="tab.favIconUrl" height="23" width="23" />
+        <span class="small ml-3 d-inline-block text-truncate" style="width: 230px" title="{{tab.title}}">{{tab.title}}</span>
+      </a>
+      <i [hidden]="!isTabSaved(tab)" class="fa fa-check pull-right mr-2" aria-hidden="true" title="Already saved to firebase" style="color: grey"></i>
+      <i (click)="saveTab(tab)" [hidden]="isTabSaved(tab)" class="fa fa-floppy-o pull-right mr-2" aria-hidden="true" title="Save to firebase" style="color: grey"></i>
+    </li>
+  </ul>
+
+  <h6>Saved Tabs<i class="fa fa-plus pull-right mr-2" (click)="openCollectionInput = !openCollectionInput"></i></h6>
+  <div class="form-group" [hidden]="!openCollectionInput">
+    <input class="pl-2" type="text" placeholder="Collection Name" [(ngModel)]="collectionName">
+    <button (click)="openCollectionInput = false; createCollection(collectionName)" type="submit" class="btn btn-primary inline">Submit</button>
+  </div>
+
+  <ul class="list-group mb-3">
+    <li class="list-group-item p-2" *ngFor="let tab of savedTabs">
       <a (click)="openTab(tab.tabIndex)">
         <img [src]="tab.favIconUrl" height="23" width="23"/>
       <span class="small ml-3 d-inline-block text-truncate" style="width: 230px" title="{{tab.title}}">{{tab.title}}</span>
       </a>      
-      <span class="pull-right mr-2"><a (click)="saveTab(tab)"><i style="color:grey" class="fa-floppy-o" aria-hidden="true" title="Open Tab"></i></a></span>
+      <span class="pull-right mr-2"><a (click)="deleteTab(tab)"><i style="color:grey" class="fa fa-trash-o" aria-hidden="true" title="Remove from firebase"></i></a></span>
     </li>
   </ul>
 
-  <div class=" mb-3" style="text-align: center;">
-    <button type="button" class="btn btn-info btn-sm mr-2" (click)="onClickRefresh()">Refresh</button>
+  <div class=" mb-3" [hidden]="true" style="text-align: center;">
+    <button type="button" class="btn btn-info btn-sm mr-2" (click)="onClickRefresh()" disabled>Refresh</button>
   </div>
+
 </div>
   
 <router-outlet></router-outlet>

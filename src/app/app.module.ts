@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
 
 // Injecting Firebase
 import { AngularFireModule } from '@angular/fire';
@@ -19,6 +20,7 @@ import { FirebaseService } from './services/firebase.service';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    FormsModule
   ],
   providers: [FirebaseService],
   bootstrap: [AppComponent]
