@@ -6,6 +6,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TabModel } from '../TabModel';
+import { CollectionModel } from '../CollectionModel';
 
 @Injectable({
   providedIn: 'root' // anyone from root and lower can get this service
@@ -28,21 +29,21 @@ export class FirebaseService {
     return this.db.collection('test').doc(tab.id).delete();
   }
 
-  getTabs() {
-    return this.db.collection('test').snapshotChanges();
+  //deleteCollectionData(collectionName, model) { // model can be TabModel or CollectinModel
+  //  return this.db.collection(collectionName).doc(model.id).delete();
+  //}
+
+  getCollectionData(resourceTitle: string) {
+    return this.db.collection(resourceTitle).snapshotChanges();
   }
 
-  createCollection(collectionName: string) {
-    return this.db.collection(collectionName).add({
+  createProject(name: string) {
+    return this.db.collection(name).add({});
+  }
+
+  updateProjectList(cm: CollectionModel) {
+    return this.db.collection('ListProjects').add({
+      collectionName: cm.projectName
     });
   }
-
-  // need GCP SDK to extend fnuctionality and use getCollections
-  //getListCollections() {
-  //  return this.db.getCollections().then(collections => {
-  //    for (let collection of collections) {
-  //      console.log(`Found collection with id: ${collection.id}`);
-  //    }
-  //  })
-  // }
 }
