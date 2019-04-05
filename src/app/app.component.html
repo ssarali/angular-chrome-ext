@@ -1,47 +1,65 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
-<div style="text-align:center; width: 400px" class="mt-3">
-  <h5>
-    <img width="40" height="40" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-    {{ title }}
-  </h5>
-</div>
-
-<div class="container">
-  <h6>Current Tabs</h6>
-  <ul class="list-group mb-3" height="500">
-    <li class="list-group-item p-2" *ngFor="let tab of tabList">
-      <a (click)="openTab(tab.tabIndex)">
-        <img [src]="tab.favIconUrl" height="23" width="23" />
-        <span class="small ml-3 d-inline-block text-truncate" style="width: 230px" title="{{tab.title}}">{{tab.title}}</span>
-      </a>
-      <i [hidden]="!isTabSaved(tab)" class="fa fa-check pull-right mr-2" aria-hidden="true" title="Already saved to firebase" style="color: grey"></i>
-      <i (click)="saveTab(tab)" [hidden]="isTabSaved(tab)" class="fa fa-floppy-o pull-right mr-2" aria-hidden="true" title="Save to firebase" style="color: grey"></i>
-    </li>
-  </ul>
-
-  <h6>Saved Tabs<i class="fa fa-plus pull-right mr-2" (click)="openCollectionInput = !openCollectionInput"></i></h6>
-  <div class="form-group" [hidden]="!openCollectionInput">
-    <input class="pl-2" type="text" placeholder="Collection Name" [(ngModel)]="collectionName">
-    <button (click)="openCollectionInput = false; createCollection(collectionName)" type="submit" class="btn btn-primary inline">Submit</button>
+<div class="body">
+  <div style="text-align:center; width: 400px" class="mt-3">
+    <h5>
+      <img width="40" height="40" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+      {{ title }}
+    </h5>
   </div>
 
-  <ul class="list-group mb-3">
-    <li class="list-group-item p-2" *ngFor="let tab of savedTabs">
-      <a (click)="openTab(tab.tabIndex)">
-        <img [src]="tab.favIconUrl" height="23" width="23"/>
-      <span class="small ml-3 d-inline-block text-truncate" style="width: 230px" title="{{tab.title}}">{{tab.title}}</span>
-      </a>      
-      <span class="pull-right mr-2"><a (click)="deleteTab(tab)"><i style="color:grey" class="fa fa-trash-o" aria-hidden="true" title="Remove from firebase"></i></a></span>
-    </li>
-  </ul>
+  <div class="container">
+    <h6>Current Tabs</h6>
+    <ul class="list-group mb-3" height="500">
+      <li class="list-group-item p-2" *ngFor="let tab of tabList">
+        <a (click)="openTab(tab.tabIndex)">
+          <img [src]="tab.favIconUrl" height="23" width="23" />
+          <span class="small ml-3 d-inline-block text-truncate" style="width: 230px" title="{{tab.title}}">{{tab.title}}</span>
+        </a>
+        <i [hidden]="!isTabSaved(tab)" class="fa fa-check pull-right mr-2" aria-hidden="true" title="Already saved to firebase" style="color: grey"></i>
+        <i (click)="saveTab(tab)" [hidden]="isTabSaved(tab)" class="fa fa-floppy-o pull-right mr-2" aria-hidden="true" title="Save to firebase" style="color: grey"></i>
+      </li>
+    </ul>
 
-  <div class=" mb-3" [hidden]="true" style="text-align: center;">
-    <button type="button" class="btn btn-info btn-sm mr-2" (click)="onClickRefresh()" disabled>Refresh</button>
+    <div style="position: relative">
+      <h6>
+        Saved Tabs
+        <button class="btn btn-info btn-sm ml-2" (click)="collectionMenu = !collectionMenu;"></button>
+      </h6>
+      <div class="block">
+        <span class="slide-block-info"></span>
+      </div>
+    </div>
+    <div class="form-group mb-2" [hidden]="!collectionMenu">
+      <input class="pl-2 mt-1" type="text" placeholder="Project Name" [(ngModel)]="projectName" style="border-radius: 3px">
+      <button (click)="openCollectionInput = false; createProject(projectName)" type="submit" class="btn btn-sm btn-primary inline ml-1 mb-2" [disabled]="!projectName">Create</button>
+    </div>
+
+    <ul class="list-group mb-3" [hidden]="!collectionMenu">
+      <li class="list-group-item p-2" *ngFor="let p of projectList">
+        <span class="small ml-3">{{ p.projectName }}</span>
+        <span class="pull-right mr-2"><a (click)="deleteProject(p)"><i style="color:grey" class="fa fa-trash-o" aria-hidden="true" title="Remove from firebase"></i></a></span>
+      </li>
+    </ul>
+
+    <ul class="list-group mb-3" [hidden]="collectionMenu">
+      <li class="list-group-item p-2" *ngFor="let tab of savedTabs">
+        <a (click)="openTab(tab.tabIndex)">
+          <img [src]="tab.favIconUrl" height="23" width="23" />
+          <span class="small ml-3 d-inline-block text-truncate" style="width: 230px" title="{{tab.title}}">{{tab.title}}</span>
+        </a>
+        <span class="pull-right mr-2"><a (click)="deleteTab(tab)"><i style="color:grey" class="fa fa-trash-o" aria-hidden="true" title="Remove from firebase"></i></a></span>
+      </li>
+    </ul>
+
+    <div class=" mb-3" [hidden]="true" style="text-align: center;">
+      <button type="button" class="btn btn-info btn-sm mr-2" (click)="onClickRefresh()" disabled>Refresh</button>
+    </div>
   </div>
-
 </div>
-  
+
+
+
 <router-outlet></router-outlet>
 
 

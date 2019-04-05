@@ -1,0 +1,27 @@
+
+
+.block {
+  display: block;
+  position: absolute;
+  background-color: #ffc107;
+  top: 27px;
+  left: -15px;
+  height: 43.5px;
+  width: 7px;
+  z-index: 1;
+  transition: .5s ease;
+}
+
+.block:hover {
+  width: 385px;
+}
+
+.slide-block-info {
+  font-size: 17px;
+  position: absolute;
+  top: 27px;
+  left: 40px;
+  white-space: nowrap;
+}
+
+
