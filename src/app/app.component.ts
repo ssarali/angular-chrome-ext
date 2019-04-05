@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, NgZone } from '@angular/core';
 import { TabModel } from './TabModel';
-import { CollectionModel } from './CollectionModel';
+import { ProjectModel } from './ProjectModel';
 import { FirebaseService } from './services/firebase.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit, OnChanges {
   public title = 'The Angular Chrome Extension';
   public tabList: TabModel[];
   public savedTabs: TabModel[];
-  public projectList: CollectionModel[];
+  public projectList: ProjectModel[];
   //public savedAreaName = 'Saved Tabs';
   public resourceTitle: 'test';
 
@@ -63,7 +63,7 @@ export class AppComponent implements OnInit, OnChanges {
         return {
           id: firebaseObject.payload.doc.id,
           ...firebaseObject.payload.doc.data()
-        } as CollectionModel
+        } as ProjectModel
       })
     });
   }
@@ -138,9 +138,9 @@ export class AppComponent implements OnInit, OnChanges {
         .then((response) => {
           console.log('Created new collection: ' + name);          
         });
-      var cm = new CollectionModel();
-      cm.projectName = name;
-      this.firebaseService.updateProjectList(cm);
+      var pm = new ProjectModel();
+      pm.projectName = name;
+      this.firebaseService.updateProjectList(pm);
     }    
   }  
 

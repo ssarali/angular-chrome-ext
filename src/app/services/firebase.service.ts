@@ -6,7 +6,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TabModel } from '../TabModel';
-import { CollectionModel } from '../CollectionModel';
+import { ProjectModel } from '../ProjectModel';
 
 @Injectable({
   providedIn: 'root' // anyone from root and lower can get this service
@@ -41,9 +41,9 @@ export class FirebaseService {
     return this.db.collection(name).add({});
   }
 
-  updateProjectList(cm: CollectionModel) {
+  updateProjectList(pm: ProjectModel) {
     return this.db.collection('ListProjects').add({
-      collectionName: cm.projectName
+      collectionName: pm.projectName
     });
   }
 }
