@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, NgZone } from '@angular/core';
 import { TabModel } from './TabModel';
 import { ProjectModel } from './ProjectModel';
 import { FirebaseService } from './services/firebase.service';
+import { concat } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,8 +18,8 @@ export class AppComponent implements OnInit, OnChanges {
   public tabList: TabModel[];
   public savedTabs: TabModel[];
   public projectList: ProjectModel[];
-  //public savedAreaName = 'Saved Tabs';
-  public resourceTitle: 'test';
+  public defaultProject: ProjectModel;
+  public selectedProject: ProjectModel;
 
   constructor(
     private zone: NgZone,
@@ -29,10 +30,14 @@ export class AppComponent implements OnInit, OnChanges {
     this.tabList = [];
     this.savedTabs = [];
     this.projectList = [];
-    this.resourceTitle = 'test';
+    this.selectedProject = this.defaultProject;
 
-    this.getSavedTabs();
-    this.getProjects(); 
+    this.defaultProject = new ProjectModel();
+    this.defaultProject.projectName = 'test';
+    this.defaultProject.id = 'NhdyUqrInaM8XHdlUo1i';
+
+    this.getProjectTabs(this.defaultProject);
+    this.getProjectNames(); 
 
     this.zone.run(() => {
       this.getTabList();
@@ -57,8 +62,8 @@ export class AppComponent implements OnInit, OnChanges {
     });
   };
 
-  getProjects(): void {
-    this.firebaseService.getCollectionData('ListProjects').subscribe(data => {
+  getProjectNames(): void {
+    this.firebaseService.getProjectNames().subscribe(data => {
       this.projectList = data.map(firebaseObject => {
         return {
           id: firebaseObject.payload.doc.id,
@@ -68,9 +73,12 @@ export class AppComponent implements OnInit, OnChanges {
     });
   }
 
-  // gets the saved tabs from firebase
-  getSavedTabs(): void {
-    this.firebaseService.getCollectionData(this.resourceTitle).subscribe(data => {
+  // gets the saved tabs from firebase. When a user chooses which project in the list, this will remove tabs from previous project from savedTabs and repopulate with
+  // tabs from the new project to display
+  getProjectTabs(p: ProjectModel): void {
+    this.selectedProject = p;
+    this.savedTabs = [];
+    this.firebaseService.getProjectTabs(p).subscribe(data => {
       this.savedTabs = data.map(firebaseObject => {
         return {
           id: firebaseObject.payload.doc.id, // gets the document id associated to each tab
@@ -84,46 +92,25 @@ export class AppComponent implements OnInit, OnChanges {
   }
 
   // deletes a tab
-  deleteTab(tab: TabModel): void {
+  deleteTab(tab: TabModel, project: ProjectModel): void {
     let savedTabIndex = this.savedTabs.findIndex(t => t.url === tab.url);
     if (savedTabIndex > 0) {
-      this.firebaseService.deleteTab(tab)
+      this.firebaseService.deleteTab(tab, project)
         .then((response) => {
           console.log('Deleted: ' + tab.title)
         });
-    } else {
-      console.log('This tab (with this url) has not been deleted.')
-    }    
+    } 
   }
 
-  //deleteCollectionData(model, isTab): void {
-  //  if (isTab) {
-  //    var index = this.savedTabs.findIndex(t => t.url === model.url);
-  //  } else {
-  //    var index = this.projectList.findIndex(p => p.projectName == model.projectName);
-  //  }
-
-  //  if (index > 0) {
-  //    this.firebaseService.deleteCollectionData(model)
-  //      .then((response) => {
-  //        console.log('Deleted: ' + model)
-  //      });
-  //  } else {
-  //    console.log('This tab (with this url) has not been deleted.')
-  //  }
-  //}
-
   // saves a single tab to firebase
-  saveTab(tab: TabModel): void {
+  saveTab(tab: TabModel, project: ProjectModel): void {
     // save tab if not found in firebase
     let savedTabIndex = this.savedTabs.findIndex(t => t.url === tab.url);
     if (savedTabIndex < 0) {
-      this.firebaseService.saveTab(tab)
+      this.firebaseService.saveTab(tab, project)
         .then((response) => {
           console.log('Saved: ' + tab.title);
         });
-    } else {
-      console.log('This tab (with this url) is already saved.')
     }
   }
 
@@ -133,16 +120,22 @@ export class AppComponent implements OnInit, OnChanges {
   }
 
   createProject(name: string): void {
-    if (name) {
-      this.firebaseService.createProject(name)
-        .then((response) => {
-          console.log('Created new collection: ' + name);          
-        });
+    var found = this.projectList.findIndex(p => p.projectName === name);
+    if (name && found < 0) {
       var pm = new ProjectModel();
       pm.projectName = name;
-      this.firebaseService.updateProjectList(pm);
+      this.firebaseService.updateProjectList(pm); // this does not update this.projectlist even though i am subscribed??
+      console.log(this.projectList);
+      var result = this.projectList[this.projectList.findIndex(p => p.projectName == name)];
+      console.log(result);
+      this.firebaseService.createProject(result);    
     }    
-  }  
+  }
+
+  deleteProject(p: ProjectModel): void {
+    this.firebaseService.deleteProject(p);
+  }
+
 
   // Open all tabs in project
   openProjectTabs(): void {
@@ -163,3 +156,5 @@ export class AppComponent implements OnInit, OnChanges {
 }
 
 
+
+// find a way to create a subcollection. it seems we need to pass in a documentID. How can we let firebase create it's own documentID
