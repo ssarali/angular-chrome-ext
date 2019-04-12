@@ -15,35 +15,46 @@ import { ProjectModel } from '../ProjectModel';
 export class FirebaseService {
   constructor(public db: AngularFirestore) { }
 
-  saveTab(tab: TabModel) {
-    return this.db.collection('test').add({
-      title: tab.title,
-      url: tab.url,
-      favIconUrl: tab.favIconUrl,
-      windowId: tab.windowId,
-      tabIndex: tab.tabIndex,
+  saveTab(t: TabModel, p: ProjectModel) {
+    return this.db.collection('ListProjects').doc(p.id).collection(p.projectName).add({
+      title: t.title,
+      url: t.url,
+      favIconUrl: t.favIconUrl,
+      windowId: t.windowId,
+      tabIndex: t.tabIndex,
     });
   }
 
-  deleteTab(tab: TabModel) {
-    return this.db.collection('test').doc(tab.id).delete();
+  deleteTab(t: TabModel, p: ProjectModel) {
+    return this.db.collection('ListProjects').doc(p.id).collection(p.projectName).doc(t.id).delete();
   }
 
-  //deleteCollectionData(collectionName, model) { // model can be TabModel or CollectinModel
-  //  return this.db.collection(collectionName).doc(model.id).delete();
-  //}
-
-  getCollectionData(resourceTitle: string) {
-    return this.db.collection(resourceTitle).snapshotChanges();
+  getProjectNames() {
+    return this.db.collection('ListProjects').snapshotChanges();
   }
 
-  createProject(name: string) {
-    return this.db.collection(name).add({});
+  getProjectTabs(p: ProjectModel) {
+    return this.db.collection('ListProjects').doc(p.id).collection(p.projectName).snapshotChanges();
   }
 
+  // todo: trying to find collection p.projectName but it can't be fouind
+  createProject(p: ProjectModel) {
+    return this.db.collection('ListProjects').doc(p.id).collection(p.projectName).add({
+      title: 'New Tab',
+      url: 'chrome://newtab/',
+      favIconUrl: 'https://www.google.com/favicon.ico',
+      windowId: 1,
+      tabIndex: 1
+    });
+  }
+
+  deleteProject(p: ProjectModel) {
+    return this.db.collection('ListProjects').doc(p.id).delete();
+  }
+  
   updateProjectList(pm: ProjectModel) {
     return this.db.collection('ListProjects').add({
-      collectionName: pm.projectName
+      projectName: pm.projectName
     });
   }
 }
