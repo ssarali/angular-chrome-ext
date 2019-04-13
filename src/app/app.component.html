@@ -22,20 +22,21 @@
 
     <div style="position: relative">      
       <h6 style="color: gray">
-        <a (click)="collectionMenu = !collectionMenu">Projects</a>
+        <a>Projects</a>
         <i class="fa fa-chevron-right" style="padding: 0 5px 0 5px; font-size: 11px"></i>
         <a>{{ selectedProject.projectName }}</a>
-        <i class="fa fa-external-link-square pull-right mr-2" (click)="openProjectTabs(true, null)" [hidden]="collectionMenu"></i>
+        <i class="fa fa-external-link-square pull-right mr-2" (click)="openProjectTabs(true, null)" [hidden]="!isAnyProjects()"></i>
       </h6>
       <div class="block"><span class="slide-block-info"></span></div>
     </div>
-    <div class="form-group mb-2" [hidden]="!collectionMenu">
+
+    <div class="form-group mb-2">
       <input class="pl-2 mt-1" type="text" placeholder="Search or Create Project" [(ngModel)]="projectName" style="border-radius: 3px">
       <button (click)="createProject(projectName)" type="submit" class="btn btn-sm btn-primary inline ml-1" [disabled]="!projectName" style="margin-bottom: 5px">Create</button>
     </div>
 
     <!--PROJECT LIST-->
-    <ul class="list-group mb-3" [hidden]="!collectionMenu">
+    <ul class="list-group mb-3" [hidden]="!isAnyProjects()">
       <li class="list-group-item p-2" *ngFor="let p of projectList">
         <span class="small ml-3" (click)="getProjectTabs(p)">{{ p.projectName }}</span>
         <span class="pull-right mr-2">
@@ -46,7 +47,8 @@
     </ul>
 
     <!--ACTIVE TAB LIST-->
-    <ul class="list-group mb-3" [hidden]="collectionMenu">
+    <h6 [hidden]="!isAnySavedTabs()">Tabs for {{this.selectedProject.projectName}}</h6>
+    <ul class="list-group mb-3" [hidden]="!isAnySavedTabs()">
       <li class="list-group-item p-2" *ngFor="let tab of savedTabs">
         <a>
           <img [src]="tab.favIconUrl" height="23" width="23" />

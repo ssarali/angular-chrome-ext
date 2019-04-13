@@ -118,6 +118,14 @@ export class AppComponent implements OnInit, OnChanges {
     return foundTabIndex > 0;
   }
 
+  isAnySavedTabs(): boolean {
+    return this.savedTabs.length > 0;
+  };
+
+  isAnyProjects(): boolean {
+    return this.projectList.length > 0;
+  };
+
   createProject(name: string): void {
     var found = this.projectList.findIndex(p => p.projectName === name);
     if (name && found < 0) {
