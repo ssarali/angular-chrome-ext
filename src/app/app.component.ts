@@ -2,7 +2,6 @@ import { Component, OnInit, OnChanges, NgZone } from '@angular/core';
 import { TabModel } from './TabModel';
 import { ProjectModel } from './ProjectModel';
 import { FirebaseService } from './services/firebase.service';
-import { concat } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -124,24 +123,27 @@ export class AppComponent implements OnInit, OnChanges {
     if (name && found < 0) {
       var pm = new ProjectModel();
       pm.projectName = name;
-      this.firebaseService.updateProjectList(pm); // this does not update this.projectlist even though i am subscribed??
-      console.log(this.projectList);
+      this.firebaseService.updateProjectList(pm);
       var result = this.projectList[this.projectList.findIndex(p => p.projectName == name)];
-      console.log(result);
-      this.firebaseService.createProject(result);    
+      this.firebaseService.createProject(result);
     }    
   }
 
-  deleteProject(p: ProjectModel): void {
-    this.firebaseService.deleteProject(p);
+  deleteProject(p: ProjectModel, key: number): void {
+    if (key == 33) {
+      this.firebaseService.deleteProject(p);
+    }    
   }
 
-
   // Open all tabs in project
-  openProjectTabs(): void {
-    this.savedTabs.forEach((tab) => {
-      chrome.tabs.create({ url: tab.url });
-    });
+  openProjectTabs(openAll: boolean, singleTab: TabModel): void {
+    if (openAll) {
+      this.savedTabs.forEach((tab) => {
+        chrome.tabs.create({ url: tab.url });
+      });
+    } else {
+      chrome.tabs.create({ url: singleTab.url });
+    }    
   }
 
   // jumps to the open tab when you click on it in the extension
@@ -149,12 +151,18 @@ export class AppComponent implements OnInit, OnChanges {
     chrome.tabs.highlight({ 'tabs': tabIndex }, function () { });
   }
 
-   //// loads the tab list. This is not needed anymore because of the subscribe method in getSavedTabs().
-  //onClickRefresh(): void {
-  //  console.log('This triggers a lifecycle to load the tabs in tabList and is related to zone. This is similar to $apply/$digest in angularJs.');
-  //}
+  /*
+   loads the tab list. This is not needed anymore because of the subscribe method in getSavedTabs().
+  onClickRefresh(): void {
+    console.log('This triggers a lifecycle to load the tabs in tabList and is related to zone. This is similar to $apply/$digest in angularJs.');
+  }
+  */
 }
 
+/* TODO
+ * when deleting a project, the projectName is gone but not the actual project's collection, do I need to individually delete all tabs within that collection?
+ * verify project deletion, do not want to accidentally delete project
+ * add filter to the project search box
+ * create ability to add notes to saved tabs?
+ */ 
 
-
-// find a way to create a subcollection. it seems we need to pass in a documentID. How can we let firebase create it's own documentID
