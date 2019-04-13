@@ -1,5 +1,3 @@
-<!--The content below is only a placeholder and can be replaced.-->
-
 <div class="body">
   <div style="text-align:center; width: 400px" class="mt-3">
     <h5>
@@ -10,39 +8,41 @@
 
   <div class="container">
     <!--CURRENT TABS-->
-    <h6>Current Tabs</h6>
+    <h6 style="color: gray">Active Tabs</h6>
     <ul class="list-group mb-3" height="500">
       <li class="list-group-item p-2" *ngFor="let tab of tabList">
         <a (click)="openTab(tab.tabIndex)">
           <img [src]="tab.favIconUrl" height="23" width="23" />
-          <span class="small ml-3 d-inline-block text-truncate" style="width: 230px" title="{{tab.title}}">{{tab.title}}</span>
+          <span class="small ml-3 d-inline-block text-truncate" style="width: 230px" title="{{ tab.title }}">{{ tab.title }}</span>
         </a>
         <i [hidden]="!isTabSaved(tab)" class="fa fa-check pull-right mr-2" aria-hidden="true" title="Already saved to firebase" style="color: grey"></i>
         <i (click)="saveTab(tab, selectedProject)" [hidden]="isTabSaved(tab)" class="fa fa-floppy-o pull-right mr-2" aria-hidden="true" title="Save to firebase" style="color: grey"></i>
       </li>
     </ul>
 
-    <div style="position: relative">
-      <!--SAVED TABS-->
-      <h6>
-        Saved Tabs
-        <i class="fa fa-external-link-square pull-right mr-2" (click)="openProjectTabs()" [hidden]="!isAnyProjects()"></i>
-        <button class="btn btn-info btn-sm ml-2" (click)="collectionMenu = !collectionMenu;"></button>
+    <div style="position: relative">      
+      <h6 style="color: gray">
+        <a>Projects</a>
+        <i class="fa fa-chevron-right" style="padding: 0 5px 0 5px; font-size: 11px"></i>
+        <a>{{ selectedProject.projectName }}</a>
+        <i class="fa fa-external-link-square pull-right mr-2" (click)="openProjectTabs(true, null)" [hidden]="!isAnyProjects()"></i>
       </h6>
-      <div class="block">
-        <span class="slide-block-info"></span>
-      </div>
+      <div class="block"><span class="slide-block-info"></span></div>
     </div>
-    <div class="form-group mb-2" [hidden]="false">
-      <input class="pl-2 mt-1" type="text" placeholder="Project Name" [(ngModel)]="projectName" style="border-radius: 3px">
-      <button (click)="createProject(projectName);" type="submit" class="btn btn-sm btn-primary inline ml-1 mb-2" [disabled]="!projectName">Create</button>
+
+    <div class="form-group mb-2">
+      <input class="pl-2 mt-1" type="text" placeholder="Search or Create Project" [(ngModel)]="projectName" style="border-radius: 3px">
+      <button (click)="createProject(projectName)" type="submit" class="btn btn-sm btn-primary inline ml-1" [disabled]="!projectName" style="margin-bottom: 5px">Create</button>
     </div>
 
     <!--PROJECT LIST-->
     <ul class="list-group mb-3" [hidden]="!isAnyProjects()">
       <li class="list-group-item p-2" *ngFor="let p of projectList">
         <span class="small ml-3" (click)="getProjectTabs(p)">{{ p.projectName }}</span>
-        <span class="pull-right mr-2"><a (click)="deleteProject(p)"><i style="color:grey" class="fa fa-trash-o" aria-hidden="true" title="Remove from firebase"></i></a></span>
+        <span class="pull-right mr-2">
+          <input class="mr-3 pl-2" style="width: 70px" placeholder="key" title="type key to delete" [(ngModel)]="deleteKey"/>
+          <a (click)="deleteProject(p, deleteKey)"><i style="color:grey" class="fa fa-trash-o" aria-hidden="true" title="Delete"></i></a>
+        </span>
       </li>
     </ul>
 
@@ -50,11 +50,11 @@
     <h6 [hidden]="!isAnySavedTabs()">Tabs for {{this.selectedProject.projectName}}</h6>
     <ul class="list-group mb-3" [hidden]="!isAnySavedTabs()">
       <li class="list-group-item p-2" *ngFor="let tab of savedTabs">
-        <a (click)="openTab(tab.tabIndex)">
+        <a>
           <img [src]="tab.favIconUrl" height="23" width="23" />
-          <span class="small ml-3 d-inline-block text-truncate" style="width: 230px" title="{{tab.title}}">{{tab.title}}</span>
+          <span class="small ml-3 d-inline-block text-truncate" style="width: 230px" title="{{ tab.title }}" (click)="openProjectTabs(false, tab)">{{ tab.title }}</span>
         </a>
-        <span class="pull-right mr-2"><a (click)="deleteTab(tab, selectedProject)"><i style="color:grey" class="fa fa-trash-o" aria-hidden="true" title="Remove from firebase"></i></a></span>
+        <span class="pull-right mr-2"><a (click)="deleteTab(tab, selectedProject)"><i style="color:grey" class="fa fa-trash-o" aria-hidden="true" title="Delete"></i></a></span>
       </li>
     </ul>
 
@@ -63,8 +63,6 @@
     </div>
   </div>
 </div>
-
-
 
 <router-outlet></router-outlet>
 

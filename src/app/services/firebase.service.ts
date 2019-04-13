@@ -15,8 +15,10 @@ import { ProjectModel } from '../ProjectModel';
 export class FirebaseService {
   constructor(public db: AngularFirestore) { }
 
+  private ProjectList = 'ListProjects';
+
   saveTab(t: TabModel, p: ProjectModel) {
-    return this.db.collection('ListProjects').doc(p.id).collection(p.projectName).add({
+    return this.db.collection(this.ProjectList).doc(p.id).collection(p.projectName).add({
       title: t.title,
       url: t.url,
       favIconUrl: t.favIconUrl,
@@ -26,20 +28,20 @@ export class FirebaseService {
   }
 
   deleteTab(t: TabModel, p: ProjectModel) {
-    return this.db.collection('ListProjects').doc(p.id).collection(p.projectName).doc(t.id).delete();
+    return this.db.collection(this.ProjectList).doc(p.id).collection(p.projectName).doc(t.id).delete();
   }
 
   getProjectNames() {
-    return this.db.collection('ListProjects').snapshotChanges();
+    return this.db.collection(this.ProjectList).snapshotChanges();
   }
 
   getProjectTabs(p: ProjectModel) {
-    return this.db.collection('ListProjects').doc(p.id).collection(p.projectName).snapshotChanges();
+    return this.db.collection(this.ProjectList).doc(p.id).collection(p.projectName).snapshotChanges();
   }
 
   // todo: trying to find collection p.projectName but it can't be fouind
   createProject(p: ProjectModel) {
-    return this.db.collection('ListProjects').doc(p.id).collection(p.projectName).add({
+    return this.db.collection(this.ProjectList).doc(p.id).collection(p.projectName).add({
       title: 'New Tab',
       url: 'chrome://newtab/',
       favIconUrl: 'https://www.google.com/favicon.ico',
@@ -49,11 +51,11 @@ export class FirebaseService {
   }
 
   deleteProject(p: ProjectModel) {
-    return this.db.collection('ListProjects').doc(p.id).delete();
+    return this.db.collection(this.ProjectList).doc(p.id).delete();
   }
   
   updateProjectList(pm: ProjectModel) {
-    return this.db.collection('ListProjects').add({
+    return this.db.collection(this.ProjectList).add({
       projectName: pm.projectName
     });
   }

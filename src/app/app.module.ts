@@ -11,9 +11,13 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { FirebaseService } from './services/firebase.service';
 
+// Pipes
+import { FilterPipe } from './filter.pipe';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
