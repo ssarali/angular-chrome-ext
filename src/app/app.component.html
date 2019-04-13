@@ -26,20 +26,20 @@
       <!--SAVED TABS-->
       <h6>
         Saved Tabs
-        <i class="fa fa-external-link-square pull-right mr-2" (click)="openProjectTabs()" [hidden]="collectionMenu"></i>
+        <i class="fa fa-external-link-square pull-right mr-2" (click)="openProjectTabs()" [hidden]="!isAnyProjects()"></i>
         <button class="btn btn-info btn-sm ml-2" (click)="collectionMenu = !collectionMenu;"></button>
       </h6>
       <div class="block">
         <span class="slide-block-info"></span>
       </div>
     </div>
-    <div class="form-group mb-2" [hidden]="!collectionMenu">
+    <div class="form-group mb-2" [hidden]="false">
       <input class="pl-2 mt-1" type="text" placeholder="Project Name" [(ngModel)]="projectName" style="border-radius: 3px">
       <button (click)="createProject(projectName);" type="submit" class="btn btn-sm btn-primary inline ml-1 mb-2" [disabled]="!projectName">Create</button>
     </div>
 
     <!--PROJECT LIST-->
-    <ul class="list-group mb-3" [hidden]="!collectionMenu">
+    <ul class="list-group mb-3" [hidden]="!isAnyProjects()">
       <li class="list-group-item p-2" *ngFor="let p of projectList">
         <span class="small ml-3" (click)="getProjectTabs(p)">{{ p.projectName }}</span>
         <span class="pull-right mr-2"><a (click)="deleteProject(p)"><i style="color:grey" class="fa fa-trash-o" aria-hidden="true" title="Remove from firebase"></i></a></span>
@@ -47,7 +47,8 @@
     </ul>
 
     <!--ACTIVE TAB LIST-->
-    <ul class="list-group mb-3" [hidden]="collectionMenu">
+    <h6 [hidden]="!isAnySavedTabs()">Tabs for {{this.selectedProject.projectName}}</h6>
+    <ul class="list-group mb-3" [hidden]="!isAnySavedTabs()">
       <li class="list-group-item p-2" *ngFor="let tab of savedTabs">
         <a (click)="openTab(tab.tabIndex)">
           <img [src]="tab.favIconUrl" height="23" width="23" />

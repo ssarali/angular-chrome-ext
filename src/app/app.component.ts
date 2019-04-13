@@ -10,7 +10,7 @@ import { concat } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnChanges {
-  ngOnChanges(changes: import("C:/git/angular-chrome-ext/node_modules/@angular/core/src/metadata/lifecycle_hooks").SimpleChanges): void {
+  ngOnChanges(changes: import("C:/git/stephenyoon-angular-chrome-ext/node_modules/@angular/core/src/metadata/lifecycle_hooks").SimpleChanges): void {
       throw new Error("Method not implemented.");
   }
 
@@ -118,6 +118,14 @@ export class AppComponent implements OnInit, OnChanges {
     let foundTabIndex = this.savedTabs.findIndex(t => t.url === tab.url);
     return foundTabIndex > 0;
   }
+
+  isAnySavedTabs(): boolean {
+    return this.savedTabs.length > 0;
+  };
+
+  isAnyProjects(): boolean {
+    return this.projectList.length > 0;
+  };
 
   createProject(name: string): void {
     var found = this.projectList.findIndex(p => p.projectName === name);
