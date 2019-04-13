@@ -17,7 +17,6 @@ export class AppComponent implements OnInit, OnChanges {
   public tabList: TabModel[];
   public savedTabs: TabModel[];
   public projectList: ProjectModel[];
-  public defaultProject: ProjectModel;
   public selectedProject: ProjectModel;
 
   constructor(
@@ -29,13 +28,7 @@ export class AppComponent implements OnInit, OnChanges {
     this.tabList = [];
     this.savedTabs = [];
     this.projectList = [];
-    this.selectedProject = this.defaultProject;
 
-    this.defaultProject = new ProjectModel();
-    this.defaultProject.projectName = 'test';
-    this.defaultProject.id = 'NhdyUqrInaM8XHdlUo1i';
-
-    this.getProjectTabs(this.defaultProject);
     this.getProjectNames(); 
 
     this.zone.run(() => {

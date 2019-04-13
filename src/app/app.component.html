@@ -23,9 +23,6 @@
     <div style="position: relative">      
       <h6 style="color: gray">
         <a>Projects</a>
-        <i class="fa fa-chevron-right" style="padding: 0 5px 0 5px; font-size: 11px"></i>
-        <a>{{ selectedProject.projectName }}</a>
-        <i class="fa fa-external-link-square pull-right mr-2" (click)="openProjectTabs(true, null)" [hidden]="!isAnyProjects()"></i>
       </h6>
       <div class="block"><span class="slide-block-info"></span></div>
     </div>
@@ -47,7 +44,10 @@
     </ul>
 
     <!--ACTIVE TAB LIST-->
-    <h6 [hidden]="!isAnySavedTabs()">Tabs for {{this.selectedProject.projectName}}</h6>
+    <h6 [hidden]="!isAnySavedTabs()" style="color: gray">
+      <i class="fa fa-external-link-square pull-right mr-2" (click)="openProjectTabs(true, null)" [hidden]="!isAnySavedTabs()"></i>
+      Tabs for {{ selectedProject.projectName }}
+    </h6>
     <ul class="list-group mb-3" [hidden]="!isAnySavedTabs()">
       <li class="list-group-item p-2" *ngFor="let tab of savedTabs">
         <a>
@@ -58,9 +58,11 @@
       </li>
     </ul>
 
+    <!--
     <div class=" mb-3" [hidden]="true" style="text-align: center;">
       <button type="button" class="btn btn-info btn-sm mr-2" (click)="onClickRefresh()" disabled>Refresh</button>
     </div>
+    -->
   </div>
 </div>
 
