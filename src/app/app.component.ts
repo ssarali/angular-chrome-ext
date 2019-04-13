@@ -10,7 +10,7 @@ import { concat } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnChanges {
-  ngOnChanges(changes: import("C:/git/stephenyoon-angular-chrome-ext/node_modules/@angular/core/src/metadata/lifecycle_hooks").SimpleChanges): void {
+  ngOnChanges(changes: import("C:/git/angular-chrome-ext/node_modules/@angular/core/src/metadata/lifecycle_hooks").SimpleChanges): void {
       throw new Error("Method not implemented.");
   }
 
