@@ -161,8 +161,6 @@ export class AppComponent implements OnInit, OnChanges {
 }
 
 /* TODO
- * when deleting a project, the projectName is gone but not the actual project's collection, do I need to individually delete all tabs within that collection?
- * verify project deletion, do not want to accidentally delete project
  * add filter to the project search box
  * create ability to add notes to saved tabs?
  */ 

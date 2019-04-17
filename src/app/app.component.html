@@ -37,12 +37,12 @@
       <li class="list-group-item p-2" *ngFor="let p of projectList">
         <span class="small ml-3" (click)="getProjectTabs(p)">{{ p.projectName }}</span>
         <span class="pull-right mr-2">
-          <input class="mr-3 pl-2" style="width: 70px" placeholder="key" title="type key to delete" [(ngModel)]="deleteKey"/>
-          <a (click)="deleteProject(p, deleteKey)"><i style="color:grey" class="fa fa-trash-o" aria-hidden="true" title="Delete"></i></a>
+          <input class="mr-3 pl-2" style="width: 70px" placeholder="key" title="type key to delete" [(ngModel)]="p.deleteKey"/>
+          <a (click)="deleteProject(p, p.deleteKey)"><i style="color:grey" class="fa fa-trash-o" aria-hidden="true" title="Delete"></i></a>
         </span>
       </li>
     </ul>
-
+    
     <!--ACTIVE TAB LIST-->
     <h6 [hidden]="!isAnySavedTabs()" style="color: gray">
       <i class="fa fa-external-link-square pull-right mr-2" (click)="openProjectTabs(true, null)" [hidden]="!isAnySavedTabs()"></i>
