@@ -1,5 +1,34 @@
 # angular-chrome-extension
 
+## Software Used
+- Angular 7
+- Bootstrap
+- Firebase Cloud Database
+- Chrome's public API
+
+## Purpose
+A Chrome extension that utilizes Chrome's public API to capture all open tabs, and allows users to save/retrieve tabs to a 'project' stored within Firebase's database.
+
+## General Configuration
+- npm install
+- npm install -g @angular/cli
+- ng new <application-name>
+- create manifest.json (required for Chrome extensions)
+- npm install --save @types/chrome
+- npm install --save firebase @angular/fire
+- npm install bootstrap  
+  
+## Configuration for Chrome Extension Usage
+- Update Environment.ts file to include your Firebase database keys.
+- Run ng build in the command prompt to create dist folder
+- Go to chrome://extensions, enable developer mode and drad n drop the dist folder onto the page
+- Chrome extension should appear beside your search bar :)
+
+## Demo
+
+
+# Auto-generated Angular information
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.0.
 
 ## Development server
