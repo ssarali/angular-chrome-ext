@@ -24,9 +24,6 @@ A Chrome extension that utilizes Chrome's public API to capture all open tabs, a
 - Go to chrome://extensions, enable developer mode and drad n drop the dist folder onto the page
 - Chrome extension should appear beside your search bar :)
 
-## Demo
-
-
 # Auto-generated Angular information
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.0.
