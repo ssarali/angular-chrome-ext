@@ -12,7 +12,7 @@ A Chrome extension that utilizes Chrome's public API to capture all open tabs, a
 ## General Configuration
 - npm install
 - npm install -g @angular/cli
-- ng new <application-name>
+- ng new < application-name >
 - create manifest.json (required for Chrome extensions)
 - npm install --save @types/chrome
 - npm install --save firebase @angular/fire
