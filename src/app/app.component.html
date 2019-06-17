@@ -28,7 +28,7 @@
     </div>
 
     <div class="form-group mb-2">
-      <input class="pl-2 mt-1" type="text" placeholder="Search or Create Project" [(ngModel)]="projectName" style="border-radius: 3px">
+      <input class="pl-2 mt-1" type="text" placeholder="Create Project" [(ngModel)]="projectName" style="border-radius: 3px">
       <button (click)="createProject(projectName)" type="submit" class="btn btn-sm btn-primary inline ml-1" [disabled]="!projectName" style="margin-bottom: 5px">Create</button>
     </div>
 
@@ -45,6 +45,7 @@
     
     <!--ACTIVE TAB LIST-->
     <h6 [hidden]="!isAnySavedTabs()" style="color: gray">
+      <i class="fa fa-times-circle pull-right mr-2" (click)="closeProjectTabs()" [hidden]="!isAnySavedTabs()"></i>
       <i class="fa fa-external-link-square pull-right mr-2" (click)="openProjectTabs(true, null)" [hidden]="!isAnySavedTabs()"></i>
       Tabs for {{ selectedProject.projectName }}
     </h6>

@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, NgZone } from '@angular/core';
 import { TabModel } from './TabModel';
 import { ProjectModel } from './ProjectModel';
 import { FirebaseService } from './services/firebase.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-root',
@@ -145,6 +146,20 @@ export class AppComponent implements OnInit, OnChanges {
     } else {
       chrome.tabs.create({ url: singleTab.url });
     }    
+  }
+
+  // Close all tabs in project (if open in window)
+  closeProjectTabs(): void {
+    this.tabList.forEach((openTab) => {
+      this.savedTabs.forEach((tab) => {
+        if (tab.url === openTab.url)
+          var indexTabRemove = this.tabList.indexOf(tab);
+          chrome.tabs.remove(indexTabRemove);
+      });
+    });
+    //chrome.tabs.query({ currentWindow: true }, (tabs) => {
+    //  var tabIds = 
+    //});
   }
 
   // jumps to the open tab when you click on it in the extension
